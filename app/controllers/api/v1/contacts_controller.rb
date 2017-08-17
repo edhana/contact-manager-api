@@ -13,9 +13,27 @@ module Api
       end
 
       def update
+        contact = Contact.find(params[:id])
+
+        if contact.update(contact_params)
+          render json: {status: 'SUCCESS', message: 'Contact updated',
+                        data: contact}, status: :ok
+        else
+          render json: {status: 'FAIL', message: 'Contact NOT Updated',
+                        data: contact.erros}, status: :unprocessable_entity
+        end
       end
 
       def destroy
+        contact = Contact.find(params[:id])
+
+        if contact.destroy
+          render json: {status: 'SUCCESS', message: 'Contact destroyed',
+                        data: []}, status: :ok
+        else
+          render json: {status: 'FAIL', message: 'Contact NOT destroyed',
+                        data: contact.erros}, status: :unprocessable_entity
+        end
       end
 
       private
