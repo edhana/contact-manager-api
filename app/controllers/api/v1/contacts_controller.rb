@@ -1,11 +1,16 @@
 module Api
   module V1
     class ContactsController < ApplicationController
+      def hello
+          render json: {status: 'SUCCESS', message: 'Hello World',
+                        data: "hello world"}, status: :ok
+      end
+
       def create
         contact = Contact.create(contact_params)
         if contact
           render json: {status: 'SUCCESS', message: 'Contact created',
-                        data: contact}, status: :ok
+                        data: contact}, status: :ok #TODO: Change status to created
         else
           render json: {status: 'FAIL', message: 'Contact NOT created',
                         data: contact.errors}, status: :unprocessable_entity
