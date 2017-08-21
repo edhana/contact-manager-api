@@ -10,9 +10,21 @@ module Api
         contact = Contact.create(contact_params)
         if contact
           render json: {status: 'SUCCESS', message: 'Contact created',
-                        data: contact}, status: :ok #TODO: Change status to created
+                        data: contact, token: contact.id}, status: :created
         else
           render json: {status: 'FAIL', message: 'Contact NOT created',
+                        data: contact.errors}, status: :unprocessable_entity
+        end
+      end
+
+      def find_by_token
+        contact = Contact.find_by_token(params[:token_id])
+
+        if contact
+          render json: {status: 'SUCCESS', message: 'Contact found',
+                        data: contact }, status: :ok
+        else
+          render json: {status: 'FAIL', message: 'Contact NOT found',
                         data: contact.errors}, status: :unprocessable_entity
         end
       end
