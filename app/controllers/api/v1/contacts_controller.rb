@@ -1,3 +1,4 @@
+# coding: utf-8
 module Api
   module V1
     class ContactsController < ApplicationController
@@ -8,7 +9,7 @@ module Api
 
       def create
         contact = Contact.create(contact_params)
-        if contact
+        if contact && contact.valid?
           render json: {status: 'SUCCESS', message: 'Contact created',
                         data: contact, token: contact.id}, status: :created
         else
@@ -18,14 +19,14 @@ module Api
       end
 
       def find_by_token
-        contact = Contact.find_by_token(params[:token_id])
+        contact = Contact.find_by_id token_params
 
         if contact
           render json: {status: 'SUCCESS', message: 'Contact found',
                         data: contact }, status: :ok
         else
-          render json: {status: 'FAIL', message: 'Contact NOT found',
-                        data: contact.errors}, status: :unprocessable_entity
+          render json: {status: 'FAIL', message: 'No contact was found with the provided token',
+                        data: ''}, status: :unprocessable_entity
         end
       end
 
@@ -56,6 +57,10 @@ module Api
       private
       def contact_params
         params.require(:contact).permit(:firstname, :lastname, :email)
+      end
+
+      def token_params
+        params.require(:token_id)
       end
     end
   end

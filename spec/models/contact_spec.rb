@@ -16,4 +16,6 @@ RSpec.describe Contact, type: :model do
   it "with invalid attributes is not saved" do
     expect{Contact.create(invalid_contact).not_to change(Contact, :count).by(1)}
   end
+
+  it "use token as search parameter"
 end
