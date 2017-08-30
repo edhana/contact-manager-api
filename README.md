@@ -1,24 +1,33 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Contact Manager Test App
 
-Things you may want to cover:
+## Introduction
 
-* Ruby version
+This app is a test REST API app that uses json as input/output. Its goal is just to save and handle a contact page service. It is a simple and straightforward way to test a basic REST API with a segregated view layer. By the way the view project could be found in https://github.com/edhana/contact-manager-view 
 
-* System dependencies
+Heroku production deployment address:
 
-* Configuration
+Heroku view layer for the application:
 
-* Database creation
+## Database configuration
 
-* Database initialization
+This application uses PostgreSQL as database for development, test and production
 
-* How to run the test suite
+### Database Setup
 
-* Services (job queues, cache servers, search engines, etc.)
+## Application Setup
 
-* Deployment instructions
+## Running the app in localy (localhost)
 
-* ...
+```
+rails s -p 8080
+```
+
+## Testing the application
+
+All tests could be found in the folder `spec/`. To run the tests just execute:
+
+```
+rspec spec/
+```
