@@ -3,6 +3,8 @@
 module Api
   module V1
     class ContactsController < ApplicationController
+      before_action :require_id_param, only: [:update, :destroy]
+
       def hello
         render json: { status: 'SUCCESS', message: 'Hello World',
                        data: 'hello world' }, status: :ok
@@ -34,7 +36,7 @@ module Api
       end
 
       def update
-        contact = Contact.find(params[:id])
+        contact = Contact.find(params[:id]) 
 
         if contact.update(contact_params)
           render json: { status: 'SUCCESS', message: 'Contact updated',
@@ -65,6 +67,14 @@ module Api
 
       def token_params
         params.require(:token_id)
+      end
+
+      def require_id_param
+        if params[:id].nil?
+          render json: { status: 'FAIL',
+                         message: 'No contact was found ',
+                         data: '' }, status: :unprocessable_entity
+        end
       end
     end
   end
